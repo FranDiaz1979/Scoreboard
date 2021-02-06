@@ -4,9 +4,9 @@
 
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("This is a ScoreBoard (for sure)");
 
             Console.Write("\nPress a key to close the window...");
             Console.ReadKey();
