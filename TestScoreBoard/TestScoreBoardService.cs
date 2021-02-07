@@ -20,13 +20,13 @@ namespace TestScoreBoard
         [Test]
         public void StartGame_HomeTeamVoid()
         {
-            Assert.Throws<ArgumentNullException>(() => this.scoreBoardService.StartGame(string.Empty, "test"));
+            Assert.Throws<ArgumentException>(() => this.scoreBoardService.StartGame(string.Empty, "test"));
         }
 
         [Test]
         public void StartGame_AwayTeamVoid()
         {
-            Assert.Throws<ArgumentNullException>(() => this.scoreBoardService.StartGame("test", string.Empty));
+            Assert.Throws<ArgumentException>(() => this.scoreBoardService.StartGame("test", string.Empty));
         }
 
         [Test]
@@ -60,13 +60,13 @@ namespace TestScoreBoard
         [Test]
         public void FinishGame_HomeTeamVoid()
         {
-            Assert.Throws<ArgumentNullException>(() => this.scoreBoardService.FinishGame(string.Empty, "test"));
+            Assert.Throws<ArgumentException>(() => this.scoreBoardService.FinishGame(string.Empty, "test"));
         }
 
         [Test]
         public void FinishGame_AwayTeamVoid()
         {
-            Assert.Throws<ArgumentNullException>(() => this.scoreBoardService.FinishGame("test", string.Empty));
+            Assert.Throws<ArgumentException>(() => this.scoreBoardService.FinishGame("test", string.Empty));
         }
 
         [Test]
@@ -97,13 +97,13 @@ namespace TestScoreBoard
         [Test]
         public void UpdateScore_HomeTeamVoid()
         {
-            Assert.Throws<ArgumentNullException>(() => this.scoreBoardService.UpdateScore(string.Empty, "test", 0, 1));
+            Assert.Throws<ArgumentException>(() => this.scoreBoardService.UpdateScore(string.Empty, "test", 0, 1));
         }
 
         [Test]
         public void UpdateScore_AwayTeamVoid()
         {
-            Assert.Throws<ArgumentNullException>(() => this.scoreBoardService.UpdateScore("test", string.Empty, 0, 1));
+            Assert.Throws<ArgumentException>(() => this.scoreBoardService.UpdateScore("test", string.Empty, 0, 1));
         }
 
         [Test]

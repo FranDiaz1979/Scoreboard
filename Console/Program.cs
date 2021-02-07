@@ -1,7 +1,5 @@
 ﻿namespace ConsoleApp
 {
-    //// TODO: Handle Exceptions
-
     using System;
     using ScoreBoard;
 
@@ -19,37 +17,46 @@
 
         private static void Menu()
         {
-            Console.Clear();
-            Console.WriteLine("Menu");
-            Console.WriteLine("====");
-            Console.WriteLine();
-            Console.WriteLine("0. Initialize with a sample");
-            Console.WriteLine("1. Start a game");
-            Console.WriteLine("2. Finish a game");
-            Console.WriteLine("3. Update a score");
-            Console.WriteLine("4. Get summary");
-            Console.WriteLine();
-            Console.WriteLine("x. Close");
-            Console.WriteLine();
-            Console.Write("Press a key to select an option...");
-            var caracter = Console.ReadKey().KeyChar;
-
-            switch (caracter)
+            try
             {
-                case '0': InitializeWithSamples(); break;
+                Console.Clear();
+                Console.WriteLine("Menu");
+                Console.WriteLine("====");
+                Console.WriteLine();
+                Console.WriteLine("0. Initialize with a sample");
+                Console.WriteLine("1. Start a game");
+                Console.WriteLine("2. Finish a game");
+                Console.WriteLine("3. Update a score");
+                Console.WriteLine("4. Get summary");
+                Console.WriteLine();
+                Console.WriteLine("x. Close");
+                Console.WriteLine();
+                Console.Write("Press a key to select an option...");
+                var caracter = Console.ReadKey().KeyChar;
 
-                case '1': OptionStartGame(); break;
+                switch (caracter)
+                {
+                    case '0': InitializeWithSamples(); break;
 
-                case '2': OptionFinishGame(); break;
+                    case '1': OptionStartGame(); break;
 
-                case '3': OptionUpdateScore(); break;
+                    case '2': OptionFinishGame(); break;
 
-                case '4': OptionGetSummary(); break;
+                    case '3': OptionUpdateScore(); break;
 
-                case 'x':
-                case 'X': Environment.Exit(0); break;
+                    case '4': OptionGetSummary(); break;
 
-                default: Menu(); break;
+                    case 'x':
+                    case 'X': Environment.Exit(0); break;
+
+                    default: Menu(); break;
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine();
+                Console.WriteLine("An error has occurred: {0}", exception.Message);
+                ReturnToMenu();
             }
         }
 
@@ -203,7 +210,7 @@
             bool success = int.TryParse(integerString, out int result);
             if (!success)
             {
-                throw new ArgumentException("Home Score is not a valid number");
+                throw new ArgumentException("Score is not right");
             }
             return result;
         }

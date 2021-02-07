@@ -90,7 +90,7 @@
         {
             if (string.IsNullOrEmpty(argument))
             {
-                throw new ArgumentNullException(nameof(argument));
+                throw new ArgumentException("Name of some team void");
             }
         }
 
@@ -100,11 +100,11 @@
             {
                 if (score.HomeTeam.ToLower() == argument.ToLower())
                 {
-                    throw new ArgumentException(nameof(score.HomeTeam));
+                    throw new ArgumentException(string.Format("'{0}' is already playing", argument));
                 }
                 if (score.AwayTeam.ToLower() == argument.ToLower())
                 {
-                    throw new ArgumentException(nameof(score.AwayTeam));
+                    throw new ArgumentException(string.Format("'{0}' is already playing", argument));
                 }
             }
         }
