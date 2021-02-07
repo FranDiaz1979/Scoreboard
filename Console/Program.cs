@@ -1,21 +1,22 @@
 ﻿namespace ConsoleApp
 {
-    // TODO: Refactorizacion
-    // TODO: Clean code
-    // TODO: Repasar requisitos
-    // TODO: make README.md
+    //// TODO: Refactorizacion
+    //// TODO: Clean code
+    //// TODO: Repasar requisitos
+    //// TODO: make README.md
+    //// TODO: Ordenar el resultado
 
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using ScoreBoard;
     using ScoreBoard.Models;
 
-    class Program
+    internal static class Program
     {
         private static readonly string titulo = "ScoreBoard (Revival frontend for backend developers)";
         private static readonly ScoreBoardService scoreBoardService = new ScoreBoardService();
-        static void Main()
+
+        private static void Main()
         {
             Console.Title = titulo;
             Menu();
@@ -25,14 +26,14 @@
         {
             Console.Clear();
             Console.WriteLine("Menu");
-            Console.WriteLine("");
+            Console.WriteLine();
             Console.WriteLine("1. Start a game");
             Console.WriteLine("2. Finish a game");
             Console.WriteLine("3. Update a score");
             Console.WriteLine("4. Get summary");
-            Console.WriteLine("");
+            Console.WriteLine();
             Console.WriteLine("x. Close");
-            Console.WriteLine("");
+            Console.WriteLine();
             Console.Write("Press a key to select an option...");
             var caracter = Console.ReadKey().KeyChar;
 
@@ -41,19 +42,24 @@
                 case '1':
                     OptionStartGame();
                     break;
+
                 case '2':
                     OptionFinishGame();
                     break;
+
                 case '3':
                     OptionUpdateScore();
                     break;
+
                 case '4':
                     OptionGetSummary();
                     break;
+
                 case 'x':
                 case 'X':
                     Environment.Exit(0);
                     break;
+
                 default:
                     Menu();
                     break;
@@ -66,14 +72,14 @@
 
             Console.Clear();
             Console.WriteLine("Get Summary");
-            Console.WriteLine("");
+            Console.WriteLine();
             int index = 0;
             foreach (var score in scores)
             {
-                Console.WriteLine("{0}. {1} {2} - {3} {4}",++index,score.HomeTeam,score.HomeScore,score.AwayTeam, score.AwayScore);
-
+                Console.WriteLine("{0}. {1} {2} - {3} {4}", ++index, score.HomeTeam, score.HomeScore, score.AwayTeam, score.AwayScore);
             }
-            Console.WriteLine("");
+
+            Console.WriteLine();
             Console.Write("Press a key to return to menu...");
             Console.ReadKey();
             Menu();
@@ -83,7 +89,7 @@
         {
             Console.Clear();
             Console.WriteLine("Update Score");
-            Console.WriteLine("");
+            Console.WriteLine();
             Console.Write("Home Team: ");
             string homeTeam = Console.ReadLine();
             Console.Write("Away Team: ");
@@ -96,6 +102,7 @@
             {
                 throw new ArgumentException("Home Score is not a number");
             }
+
             Console.Write("Away Score: ");
             string awayScoreString = Console.ReadLine();
             int awayScore;
@@ -108,7 +115,7 @@
             scoreBoardService.UpdateScore(homeTeam, awayTeam, homeScore, awayScore);
 
             Console.WriteLine("Score Updated");
-            Console.WriteLine("");
+            Console.WriteLine();
             Console.Write("Press a key to return to menu...");
             Console.ReadKey();
             Menu();
@@ -118,7 +125,7 @@
         {
             Console.Clear();
             Console.WriteLine("Finish a game");
-            Console.WriteLine("");
+            Console.WriteLine();
             Console.Write("Home Team: ");
             string homeTeam = Console.ReadLine();
             Console.Write("Away Team: ");
@@ -127,7 +134,7 @@
             scoreBoardService.FinishGame(homeTeam, awayTeam);
 
             Console.WriteLine("Game finished");
-            Console.WriteLine("");
+            Console.WriteLine();
             Console.Write("Press a key to return to menu...");
             Console.ReadKey();
             Menu();
@@ -137,7 +144,7 @@
         {
             Console.Clear();
             Console.WriteLine("Start a game");
-            Console.WriteLine("");
+            Console.WriteLine();
             Console.Write("Home Team: ");
             string homeTeam = Console.ReadLine();
             Console.Write("Away Team: ");
@@ -146,7 +153,7 @@
             scoreBoardService.StartGame(homeTeam, awayTeam);
 
             Console.WriteLine("Game started");
-            Console.WriteLine("");
+            Console.WriteLine();
             Console.Write("Press a key to return to menu...");
             Console.ReadKey();
             Menu();
