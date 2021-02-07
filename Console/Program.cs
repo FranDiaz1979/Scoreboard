@@ -1,5 +1,10 @@
 ﻿namespace ConsoleApp
 {
+    // TODO: Refactorizacion
+    // TODO: Clean code
+    // TODO: Repasar requisitos
+    // TODO: make README.md
+
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -8,8 +13,8 @@
 
     class Program
     {
-        private static string titulo = "ScoreBoard (Revival frontend for backend developers)";
-        private static ScoreBoardService scoreBoardService = new ScoreBoardService();
+        private static readonly string titulo = "ScoreBoard (Revival frontend for backend developers)";
+        private static readonly ScoreBoardService scoreBoardService = new ScoreBoardService();
         static void Main()
         {
             Console.Title = titulo;

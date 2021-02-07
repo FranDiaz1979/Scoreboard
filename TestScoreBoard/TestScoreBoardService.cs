@@ -28,7 +28,6 @@ namespace TestScoreBoard
     //          Se permite que el update sea 1 gol negativo por si el cliente se equivoca
     //      Cambiar el score
 
-
     // public IEnumerable<Score> GetSummary()
 
     public class Tests
@@ -212,8 +211,6 @@ namespace TestScoreBoard
             Assert.AreEqual("testB", score2.AwayTeam);
             Assert.AreEqual(2, score2.HomeScore);
             Assert.AreEqual(0, score2.AwayScore);
-
         }
-
     }
 }

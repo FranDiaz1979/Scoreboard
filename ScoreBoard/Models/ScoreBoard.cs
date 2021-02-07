@@ -7,6 +7,11 @@
 
     public class ScoreBoard
     {
-        public IEnumerable<Score> Scores { get; set; }
+        public ScoreBoard()
+        {
+            Scores = new List<Score>();
+        }
+
+        public List<Score> Scores { get; set; }
     }
 }

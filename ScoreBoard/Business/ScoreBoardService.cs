@@ -1,46 +1,105 @@
 ﻿namespace ScoreBoard
 {
     using global::ScoreBoard.Models;
+    using System;
     using System.Collections.Generic;
 
     public class ScoreBoardService
     {
         private ScoreBoard scoreBoard;
 
-        public void StartGame(string HomeTeam, string AwayTeam)
+        public ScoreBoardService()
         {
-            // Si hometeam está vacio peta
-            // si awayteam esta vacio peta
-            // si hometeam ya existe en scoreboard peta
-            // si awayteam ya existe en scoreboard peta
-
-            // guardar el score
+            scoreBoard = new ScoreBoard();
         }
 
-        public void FinishGame(string HomeTeam, string AwayTeam)
+        private void CheckStringNotNull(string argument)
         {
-            // Si hometeam está vacio peta
-            // si awayteam esta vacio peta
-            // si hometeam o awayteam no existen en scoreboard peta
-
-            // Quita el score del scoreboard
+            if (string.IsNullOrEmpty(argument))
+            {
+                throw new ArgumentNullException(nameof(argument));
+            }
         }
 
-        public void UpdateScore(string HomeTeam, string AwayTeam, int HomeScore, int AwayScore)
+        private void CheckNotExist(string argument)
         {
-            // Si hometeam está vacio peta
-            // si awayteam esta vacio peta
-            // si hometeam o awayteam no existen en scoreboard peta
+            foreach (var score in scoreBoard.Scores)
+            {
+                if (score.HomeTeam.ToLower() == argument.ToLower() || score.AwayTeam.ToLower() == argument.ToLower())
+                {
+                    throw new ArgumentException();
+                }
+            }
+        }
+
+        public void StartGame(string homeTeam, string awayTeam)
+        {
+            CheckStringNotNull(homeTeam);
+            CheckStringNotNull(awayTeam);
+            CheckNotExist(homeTeam);
+            CheckNotExist(awayTeam);
+
+            scoreBoard.Scores.Add(new Score
+            {
+                HomeTeam = homeTeam,
+                AwayTeam = awayTeam,
+                HomeScore = 0,
+                AwayScore = 0,
+            });
+        }
+
+        public void FinishGame(string homeTeam, string awayTeam)
+        {
+            CheckStringNotNull(homeTeam);
+            CheckStringNotNull(awayTeam);
+            Score score = FindGame(homeTeam, awayTeam);
+            scoreBoard.Scores.Remove(score);
+        }
+
+        private Score FindGame(string homeTeam, string awayTeam)
+        {
+            return scoreBoard.Scores.Find(x => x.HomeTeam.ToLower() == homeTeam.ToLower() && x.AwayTeam.ToLower() == awayTeam.ToLower());
+        }
+
+        public void UpdateScore(string homeTeam, string awayTeam, int homeScore, int awayScore)
+        {
+            CheckStringNotNull(homeTeam);
+            CheckStringNotNull(awayTeam);
+
+            Score score = FindGame(homeTeam, awayTeam);
+            CheckOnlyOneGoal(score, homeScore, awayScore);
+
+            score.HomeScore = homeScore;
+            score.AwayScore = awayScore;
+        }
+
+        private void CheckOnlyOneGoal(Score score, int homeScore, int awayScore)
+        {
             // La diferencia en score de home==0 y away==1 o bien score de home==1 y away==0 o peta
-            //      Se permite que el update sea 1 gol negativo por si el cliente se equivoca
+            //      Se permite que el update sea 1 gol negativo por si el cliente se equivoca, que pueda rectificar
+            //      Se permite que la diferencia sea 0 por si se envia n veces la misma peticion
 
-            // Cambiar el score
+            int differenceHomeScore = homeScore - score.HomeScore;
+            if (differenceHomeScore < -1 || differenceHomeScore > 1)
+            {
+                throw new Exception("Score is not right");
+            }
+
+            int differenceAwayScore = awayScore - score.AwayScore;
+            if (differenceAwayScore < -1 || differenceAwayScore > 1)
+            {
+                throw new Exception("Score is not right");
+            }
+
+            if (differenceHomeScore != 0 && differenceAwayScore != 0)
+            {
+                throw new Exception("Score is not right");
+            }
         }
 
         public IEnumerable<Score> GetSummary()
         {
-            // Code
-            return new List<Score>();
+            return scoreBoard.Scores;
         }
     }
 }
