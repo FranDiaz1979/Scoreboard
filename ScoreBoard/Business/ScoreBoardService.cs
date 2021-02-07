@@ -1,7 +1,6 @@
 ﻿namespace ScoreBoard
 {
     using global::ScoreBoard.Models;
-    using System;
     using System.Collections.Generic;
 
     public class ScoreBoardService
@@ -14,7 +13,7 @@
             // si awayteam esta vacio peta
             // si hometeam ya existe en scoreboard peta
             // si awayteam ya existe en scoreboard peta
-            
+
             // guardar el score
         }
 
@@ -43,7 +42,5 @@
             // Code
             return new List<Score>();
         }
-
-
     }
 }
