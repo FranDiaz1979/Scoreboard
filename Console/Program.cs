@@ -1,10 +1,8 @@
 ﻿namespace ConsoleApp
 {
-    //// TODO: Refactorizacion
-    //// TODO: Clean code
-    //// TODO: Repasar requisitos
-    //// TODO: make README.md
     //// TODO: Ordenar el resultado
+    //// TODO: Repasar README.md
+    //// TODO: Probar a mano el codigo
 
     using System;
     using System.Linq;
@@ -39,30 +37,18 @@
 
             switch (caracter)
             {
-                case '1':
-                    OptionStartGame();
-                    break;
+                case '1': OptionStartGame(); break;
 
-                case '2':
-                    OptionFinishGame();
-                    break;
+                case '2': OptionFinishGame(); break;
 
-                case '3':
-                    OptionUpdateScore();
-                    break;
+                case '3': OptionUpdateScore(); break;
 
-                case '4':
-                    OptionGetSummary();
-                    break;
+                case '4': OptionGetSummary(); break;
 
                 case 'x':
-                case 'X':
-                    Environment.Exit(0);
-                    break;
+                case 'X': Environment.Exit(0); break;
 
-                default:
-                    Menu();
-                    break;
+                default: Menu(); break;
             }
         }
 
@@ -79,10 +65,7 @@
                 Console.WriteLine("{0}. {1} {2} - {3} {4}", ++index, score.HomeTeam, score.HomeScore, score.AwayTeam, score.AwayScore);
             }
 
-            Console.WriteLine();
-            Console.Write("Press a key to return to menu...");
-            Console.ReadKey();
-            Menu();
+            ReturnToMenu();
         }
 
         private static void OptionUpdateScore()
@@ -90,35 +73,17 @@
             Console.Clear();
             Console.WriteLine("Update Score");
             Console.WriteLine();
-            Console.Write("Home Team: ");
-            string homeTeam = Console.ReadLine();
-            Console.Write("Away Team: ");
-            string awayTeam = Console.ReadLine();
-            Console.Write("Home Score: ");
-            string homeScoreString = Console.ReadLine();
-            int homeScore;
-            bool success = int.TryParse(homeScoreString, out homeScore);
-            if (!success)
-            {
-                throw new ArgumentException("Home Score is not a number");
-            }
-
-            Console.Write("Away Score: ");
-            string awayScoreString = Console.ReadLine();
-            int awayScore;
-            success = int.TryParse(awayScoreString, out awayScore);
-            if (!success)
-            {
-                throw new ArgumentException("Away Score is not a number");
-            }
+            string homeTeam = ReadArgument("Home Team");
+            string awayTeam = ReadArgument("Away Team");
+            string homeScoreString = ReadArgument("Home Score");
+            int homeScore = ConvertToInt(homeScoreString);
+            string awayScoreString = ReadArgument("Away Score");
+            int awayScore = ConvertToInt(awayScoreString);
 
             scoreBoardService.UpdateScore(homeTeam, awayTeam, homeScore, awayScore);
 
             Console.WriteLine("Score Updated");
-            Console.WriteLine();
-            Console.Write("Press a key to return to menu...");
-            Console.ReadKey();
-            Menu();
+            ReturnToMenu();
         }
 
         private static void OptionFinishGame()
@@ -126,18 +91,13 @@
             Console.Clear();
             Console.WriteLine("Finish a game");
             Console.WriteLine();
-            Console.Write("Home Team: ");
-            string homeTeam = Console.ReadLine();
-            Console.Write("Away Team: ");
-            string awayTeam = Console.ReadLine();
+            string homeTeam = ReadArgument("Home Team");
+            string awayTeam = ReadArgument("Away Team");
 
             scoreBoardService.FinishGame(homeTeam, awayTeam);
 
             Console.WriteLine("Game finished");
-            Console.WriteLine();
-            Console.Write("Press a key to return to menu...");
-            Console.ReadKey();
-            Menu();
+            ReturnToMenu();
         }
 
         private static void OptionStartGame()
@@ -145,18 +105,37 @@
             Console.Clear();
             Console.WriteLine("Start a game");
             Console.WriteLine();
-            Console.Write("Home Team: ");
-            string homeTeam = Console.ReadLine();
-            Console.Write("Away Team: ");
-            string awayTeam = Console.ReadLine();
+            string homeTeam = ReadArgument("Home Team");
+            string awayTeam = ReadArgument("Away Team");
 
             scoreBoardService.StartGame(homeTeam, awayTeam);
 
             Console.WriteLine("Game started");
+            ReturnToMenu();
+        }
+
+        private static void ReturnToMenu()
+        {
             Console.WriteLine();
             Console.Write("Press a key to return to menu...");
             Console.ReadKey();
             Menu();
+        }
+
+        private static int ConvertToInt(string integerString)
+        {
+            bool success = int.TryParse(integerString, out int result);
+            if (!success)
+            {
+                throw new ArgumentException("Home Score is not a valid number");
+            }
+            return result;
+        }
+
+        private static string ReadArgument(string text)
+        {
+            Console.Write("{0}: ", text);
+            return Console.ReadLine();
         }
     }
 }
