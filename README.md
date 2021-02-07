@@ -23,3 +23,10 @@ In the methods CheckOnlyOneGoal and CheckNotExist, the Clean Code says that his 
 but I don't like too much anidation.
 Console.WriteLine(); can be changed by "\n", but I this this way the code is more readable.
 Menu is too long and I could separate the visualization and the logical, but I like this way
+
+Magic Strings:
+By now there are magic strings, i didn't have time for it
+
+Data Clumps:
+In the Score model there are 2 data clumps, Match (HomeTeam and AwayTeam) and "Result" (HomeScore and AwayScore),
+but applying this refactoring, the code make it minus readable. 

@@ -49,7 +49,7 @@ namespace TestScoreBoard
         public void StartGame_Ok()
         {
             this.scoreBoardService.StartGame("test", "test2");
-            Score result = ((List<Score>)this.scoreBoardService.GetSummary()).First();
+            Score result = this.scoreBoardService.GetSummary().First();
 
             Assert.AreEqual("test", result.HomeTeam);
             Assert.AreEqual("test2", result.AwayTeam);
@@ -180,7 +180,7 @@ namespace TestScoreBoard
             this.scoreBoardService.UpdateScore("testA", "testB", 1, 0);
             this.scoreBoardService.UpdateScore("testA", "testB", 2, 0);
 
-            List<Score> result = (List<Score>)this.scoreBoardService.GetSummary();
+            var result = this.scoreBoardService.GetSummary();
 
             Score score1 = result.First(x => x.HomeTeam == "test1");
             Score score2 = result.First(x => x.HomeTeam == "testA");

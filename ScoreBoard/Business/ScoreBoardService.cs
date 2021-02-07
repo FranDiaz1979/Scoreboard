@@ -1,6 +1,7 @@
 ﻿namespace ScoreBoard
 {
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using global::ScoreBoard.Models;
 
@@ -51,7 +52,7 @@
 
         public IEnumerable<Score> GetSummary()
         {
-            return this.scoreBoard.Scores;
+            return this.scoreBoard.Scores.OrderByDescending(x => x.HomeScore + x.AwayScore).ThenByDescending(x => x.Datetime);
         }
 
         private Score FindGame(string homeTeam, string awayTeam)

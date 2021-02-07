@@ -1,13 +1,9 @@
 ﻿namespace ConsoleApp
 {
-    //// TODO: Ordenar el resultado
-    //// TODO: Repasar README.md
-    //// TODO: Probar a mano el codigo
+    //// TODO: Handle Exceptions
 
     using System;
-    using System.Linq;
     using ScoreBoard;
-    using ScoreBoard.Models;
 
     internal static class Program
     {
@@ -17,6 +13,7 @@
         private static void Main()
         {
             Console.Title = titulo;
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
             Menu();
         }
 
@@ -24,7 +21,9 @@
         {
             Console.Clear();
             Console.WriteLine("Menu");
+            Console.WriteLine("====");
             Console.WriteLine();
+            Console.WriteLine("0. Initialize with a sample");
             Console.WriteLine("1. Start a game");
             Console.WriteLine("2. Finish a game");
             Console.WriteLine("3. Update a score");
@@ -37,6 +36,8 @@
 
             switch (caracter)
             {
+                case '0': InitializeWithSamples(); break;
+
                 case '1': OptionStartGame(); break;
 
                 case '2': OptionFinishGame(); break;
@@ -52,12 +53,81 @@
             }
         }
 
+        private static void InitializeWithSamples()
+        {
+            Console.Clear();
+            Console.WriteLine("Initialize Scoreboard");
+            Console.WriteLine("---------------------");
+
+            string homeTeam = "Mexico";
+            string awayTeam = "Canada";
+            scoreBoardService.StartGame(homeTeam, awayTeam);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 0, 1);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 0, 2);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 0, 3);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 0, 4);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 0, 5);
+
+            homeTeam = "Spain";
+            awayTeam = "Brazil";
+            scoreBoardService.StartGame(homeTeam, awayTeam);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 1, 0);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 2, 0);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 3, 0);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 4, 0);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 5, 0);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 6, 0);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 7, 0);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 8, 0);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 9, 0);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 10, 0);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 10, 1);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 10, 2);
+
+            homeTeam = "Germany";
+            awayTeam = "France";
+            scoreBoardService.StartGame(homeTeam, awayTeam);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 1, 0);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 2, 0);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 2, 1);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 2, 2);
+
+            homeTeam = "Uruguay";
+            awayTeam = "Italy";
+            scoreBoardService.StartGame(homeTeam, awayTeam);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 1, 0);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 2, 0);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 3, 0);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 4, 0);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 5, 0);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 6, 0);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 6, 1);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 6, 2);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 6, 3);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 6, 4);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 6, 5);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 6, 6);
+
+            homeTeam = "Argentina";
+            awayTeam = "Australia";
+            scoreBoardService.StartGame(homeTeam, awayTeam);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 1, 0);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 2, 0);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 3, 0);
+            scoreBoardService.UpdateScore(homeTeam, awayTeam, 3, 1);
+
+            Console.WriteLine();
+            Console.WriteLine("Scoreboard initialized");
+            ReturnToMenu();
+        }
+
         private static void OptionGetSummary()
         {
-            IQueryable<Score> scores = (IQueryable<Score>)scoreBoardService.GetSummary();
+            var scores = scoreBoardService.GetSummary();
 
             Console.Clear();
             Console.WriteLine("Get Summary");
+            Console.WriteLine("-----------");
             Console.WriteLine();
             int index = 0;
             foreach (var score in scores)
@@ -72,6 +142,7 @@
         {
             Console.Clear();
             Console.WriteLine("Update Score");
+            Console.WriteLine("------------");
             Console.WriteLine();
             string homeTeam = ReadArgument("Home Team");
             string awayTeam = ReadArgument("Away Team");
@@ -82,6 +153,7 @@
 
             scoreBoardService.UpdateScore(homeTeam, awayTeam, homeScore, awayScore);
 
+            Console.WriteLine();
             Console.WriteLine("Score Updated");
             ReturnToMenu();
         }
@@ -90,12 +162,14 @@
         {
             Console.Clear();
             Console.WriteLine("Finish a game");
+            Console.WriteLine("-------------");
             Console.WriteLine();
             string homeTeam = ReadArgument("Home Team");
             string awayTeam = ReadArgument("Away Team");
 
             scoreBoardService.FinishGame(homeTeam, awayTeam);
 
+            Console.WriteLine();
             Console.WriteLine("Game finished");
             ReturnToMenu();
         }
@@ -104,12 +178,14 @@
         {
             Console.Clear();
             Console.WriteLine("Start a game");
+            Console.WriteLine("------------");
             Console.WriteLine();
             string homeTeam = ReadArgument("Home Team");
             string awayTeam = ReadArgument("Away Team");
 
             scoreBoardService.StartGame(homeTeam, awayTeam);
 
+            Console.WriteLine();
             Console.WriteLine("Game started");
             ReturnToMenu();
         }
